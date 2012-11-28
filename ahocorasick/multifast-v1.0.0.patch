@@ -1,0 +1,53 @@
+diff -wru multifast-v1.0.0/ahocorasick/Makefile multifast-v1.0.0-modified/ahocorasick/Makefile
+--- multifast-v1.0.0/ahocorasick/Makefile	2012-09-02 19:02:49.000000000 -0400
++++ multifast-v1.0.0-modified/ahocorasick/Makefile	2012-11-28 15:01:32.877168721 -0500
+@@ -1,5 +1,5 @@
+ LIBNAME := libahocorasick.a
+-CFLAGS := -Wall
++CFLAGS := -Wall -fPIC
+ HEADERS := actypes.h ahocorasick.h node.h
+ 
+ $(LIBNAME): ahocorasick.o node.o
+diff -wru multifast-v1.0.0/ahocorasick/actypes.h multifast-v1.0.0-modified/ahocorasick/actypes.h
+--- multifast-v1.0.0/ahocorasick/actypes.h	2012-11-28 16:45:19.486989737 -0500
++++ multifast-v1.0.0-modified/ahocorasick/actypes.h	2012-11-28 16:45:35.377238349 -0500
+@@ -61,8 +61,8 @@
+ **/
+ typedef struct
+ {
+-	AC_ALPHABET_t * astring; /* String of alphabets */
+-	unsigned int length; /* Length of pattern */
++	const AC_ALPHABET_t * astring; /* String of alphabets */
++	size_t length; /* Length of pattern */
+ 	AC_REP_t rep; /* Representative string (optional) */
+ } AC_PATTERN_t;
+ 
+@@ -73,8 +73,8 @@
+ **/
+ typedef struct
+ {
+-	AC_ALPHABET_t * astring; /* String of alphabets */
+-	unsigned int length; /* Length of string */
++	const AC_ALPHABET_t * astring; /* String of alphabets */
++	size_t length; /* Length of string */
+ } AC_TEXT_t;
+ 
+ /* AC_MATCH_t:
+@@ -94,7 +94,7 @@
+ typedef struct
+ {
+ 	AC_PATTERN_t * patterns; /* Array of matched pattern */
+-	long position; /* The end position of matching pattern(s) in the text */
++	ptrdiff_t position; /* The end position of matching pattern(s) in the text */
+ 	unsigned int match_num; /* Number of matched patterns */
+ } AC_MATCH_t;
+ 
+@@ -108,7 +108,7 @@
+ 	ACERR_DUPLICATE_PATTERN, /* Duplicate patterns */
+ 	ACERR_LONG_PATTERN, /* Pattern length is longer than AC_PATTRN_MAX_LENGTH */
+ 	ACERR_ZERO_PATTERN, /* Empty pattern (zero length) */
+-	ACERR_AUTOMATA_CLOSED, /* Automata is closed. after calling
++	ACERR_AUTOMATA_CLOSED /* Automata is closed. after calling
+ 	ac_automata_finalize() you can not add new patterns to the automata. */
+ } AC_ERROR_t;
+ 
