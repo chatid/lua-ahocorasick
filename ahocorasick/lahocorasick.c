@@ -100,6 +100,7 @@ static const struct luaL_Reg lahocorasick [] = {
 };
 static const struct luaL_Reg lahocorasick_meta [] = {
 	{ "__tostring" , lahocorasick_tostring },
+	{ "__gc" , lahocorasick_release },
 	{ NULL , NULL }
 };
 static const struct luaL_Reg lahocorasick_methods [] = {
@@ -107,7 +108,6 @@ static const struct luaL_Reg lahocorasick_methods [] = {
 	{ "finalize" , lahocorasick_finalize },
 	{ "search" , lahocorasick_search },
 	{ "reset" , lahocorasick_reset },
-	{ "release" , lahocorasick_release },
 	{ "display" , lahocorasick_display },
 	{ NULL , NULL }
 };
