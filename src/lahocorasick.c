@@ -112,7 +112,7 @@ static const struct luaL_Reg lahocorasick_methods [] = {
 	{ NULL , NULL }
 };
 
-int luaopen_lahocorasick ( lua_State*L ) {
+extern int luaopen_ahocorasick ( lua_State*L ) {
 	lua_newtable ( L );
 	luaL_register ( L , NULL , lahocorasick );
 
