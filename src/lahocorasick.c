@@ -16,7 +16,8 @@ int lahocorasick_cb (AC_MATCH_t* match, void* udata) {
 		lua_pushvalue ( (lua_State*)udata , 3 ); /* Re-push function */
 		lua_pushnumber ( (lua_State*)udata , match->position-match->patterns[i].length+1 ); /* Push start position */
 		lua_pushnumber ( (lua_State*)udata , match->position ); /* Push finish position */
-		lua_call ( (lua_State*)udata , 2 , 1 );
+		lua_pushnumber((lua_State*)udata, match->match_num); /* Push number of matched patterns */
+		lua_call((lua_State*)udata, 3, 1);
 		if ( lua_toboolean ( (lua_State*)udata , -1 ) ) return 1;
 		lua_pop ( (lua_State*)udata , 1 );
 	}
