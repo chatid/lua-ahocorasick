@@ -24,6 +24,11 @@ int lahocorasick_cb (AC_MATCH_t* match, void* udata) {
 	return 0;
 }
 
+/* Callback function that stops on first match */
+int lahocorasick_cb_stop (AC_MATCH_t* match, void* udata) {
+	return 1;
+}
+
 static int lahocorasick_new ( lua_State* L ) {
 	*(AC_AUTOMATA_t**)lua_newuserdata (L,sizeof(AC_AUTOMATA_t*)) = ac_automata_init();
 	luaL_getmetatable ( L , AHO_METATABLE_KEY );
@@ -75,12 +80,18 @@ static int lahocorasick_search ( lua_State* L ) {
 	AC_TEXT_t txt;
 	size_t len;
 	int keep;
+	AC_MATCH_CALBACK_f callback;
 	txt.astring = lua_tolstring(L, 2, &len);
 	txt.length = len;
-	luaL_checktype(L, 3, LUA_TFUNCTION);
+	if (lua_isnoneornil(L, 3)) {
+		callback = &lahocorasick_cb_stop;
+	} else {
+		luaL_checktype(L, 3, LUA_TFUNCTION);
+		callback = &lahocorasick_cb;
+	}
 	keep = lua_toboolean(L, 4);
 	lua_settop ( L , 3 );
-	switch (ac_automata_search(m, &txt, keep, &lahocorasick_cb, (void*)L)) {
+	switch (ac_automata_search(m, &txt, keep, callback, (void*)L)) {
 		case -1: /* failed; automata is not finalized */
 			return luaL_error(L, "automata is not finalized");
 		case 0: /* success; input text was searched to the end */
