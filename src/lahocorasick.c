@@ -73,11 +73,13 @@ static int lahocorasick_search ( lua_State* L ) {
 	AC_AUTOMATA_t* m = *(AC_AUTOMATA_t**)luaL_checkudata ( L , 1 , AHO_METATABLE_KEY );
 	AC_TEXT_t txt;
 	size_t len;
+	int keep;
 	txt.astring = lua_tolstring(L, 2, &len);
 	txt.length = len;
 	luaL_checktype(L, 3, LUA_TFUNCTION);
+	keep = lua_toboolean(L, 4);
 	lua_settop ( L , 3 );
-	switch (ac_automata_search(m, &txt, 0, &lahocorasick_cb, (void*)L)) {
+	switch (ac_automata_search(m, &txt, keep, &lahocorasick_cb, (void*)L)) {
 		case -1: /* failed; automata is not finalized */
 			return luaL_error(L, "automata is not finalized");
 		case 0: /* success; input text was searched to the end */
