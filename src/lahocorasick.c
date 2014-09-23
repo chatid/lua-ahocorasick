@@ -75,6 +75,7 @@ static int lahocorasick_search ( lua_State* L ) {
 	size_t len;
 	txt.astring = lua_tolstring(L, 2, &len);
 	txt.length = len;
+	luaL_checktype(L, 3, LUA_TFUNCTION);
 	lua_settop ( L , 3 );
 	lua_pushnumber ( L , ac_automata_search ( m , &txt , (void*)L ) );
 	return 1;
