@@ -38,7 +38,9 @@ static int lahocorasick_tostring ( lua_State* L ) {
 static int lahocorasick_add ( lua_State* L ) {
 	AC_AUTOMATA_t* m = *(AC_AUTOMATA_t**)luaL_checkudata ( L , 1 , AHO_METATABLE_KEY );
 	AC_PATTERN_t pat;
-	pat.astring = lua_tolstring ( L , 2 , &pat.length );
+	size_t len;
+	pat.astring = lua_tolstring(L, 2, &len);
+	pat.length = len;
 
 	switch ( ac_automata_add ( m , &pat ) ) {
 		case ACERR_SUCCESS:
@@ -70,7 +72,9 @@ static int lahocorasick_search ( lua_State* L ) {
 	int cb;
 	AC_AUTOMATA_t* m = *(AC_AUTOMATA_t**)luaL_checkudata ( L , 1 , AHO_METATABLE_KEY );
 	AC_TEXT_t txt;
-	txt.astring = lua_tolstring ( L , 2 , &txt.length );
+	size_t len;
+	txt.astring = lua_tolstring(L, 2, &len);
+	txt.length = len;
 	lua_settop ( L , 3 );
 	lua_pushnumber ( L , ac_automata_search ( m , &txt , (void*)L ) );
 	return 1;
