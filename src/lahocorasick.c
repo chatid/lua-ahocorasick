@@ -93,12 +93,6 @@ static int lahocorasick_search ( lua_State* L ) {
 	}
 }
 
-static int lahocorasick_reset ( lua_State* L ) {
-	AC_AUTOMATA_t* m = *(AC_AUTOMATA_t**)luaL_checkudata ( L , 1 , AHO_METATABLE_KEY );
-	ac_automata_reset ( m );
-	return 0;
-}
-
 static int lahocorasick_release ( lua_State* L ) {
 	AC_AUTOMATA_t* m = *(AC_AUTOMATA_t**)luaL_checkudata ( L , 1 , AHO_METATABLE_KEY );
 	ac_automata_release ( m );
@@ -124,7 +118,6 @@ static const struct luaL_Reg lahocorasick_methods [] = {
 	{ "add" , lahocorasick_add },
 	{ "finalize" , lahocorasick_finalize },
 	{ "search" , lahocorasick_search },
-	{ "reset" , lahocorasick_reset },
 	{ "display" , lahocorasick_display },
 	{ NULL , NULL }
 };
