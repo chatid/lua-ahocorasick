@@ -1,9 +1,0 @@
-This is a lua binding to MultiFast[1], which is used for quickly and efficiently searching text for multiple strings.
-
-It depends specifically on the ahocorasick library (part of MultiFast). This is also available packaged for Ubuntu (as libahocorasick0) in a PPA[2].
-
-When not using the Ubuntu packages, the supplied multifast-v1.0.0.patch must be applied to the MultiFast source package before compilation.
-
-
-[1]: http://multifast.sourceforge.net/
-[2]: https://launchpad.net/~mwild1/+archive/ppa
