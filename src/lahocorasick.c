@@ -117,6 +117,7 @@ static const struct luaL_Reg lahocorasick_meta [] = {
 static const struct luaL_Reg lahocorasick_methods [] = {
 	{ "add" , lahocorasick_add },
 	{ "finalize" , lahocorasick_finalize },
+	{ "finalise" , lahocorasick_finalize },
 	{ "search" , lahocorasick_search },
 	{ "display" , lahocorasick_display },
 	{ NULL , NULL }
